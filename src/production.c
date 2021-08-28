@@ -14,7 +14,7 @@ bool production(int argc, char* argv[])
 	bzero(string4Search, MAXSTRINGLENGTH+1);
 	int foundStringLength = -1; //initialize to obviously wrong value
 
-		if(argc <=1) //no interesting information
+		if(argc <= 1) //no interesting information
 		{
 			puts("Didn't find any arguments.");
 			fflush(stdout);
@@ -25,7 +25,7 @@ bool production(int argc, char* argv[])
 			printf("Found %d arguments.\n", argc);
 			fflush(stdout);
 
-			for(int i = 1; i<argc; i++) //don't want to read argv[0]
+			for(int i = 1; i < argc; i++) //don't want to read argv[0]
 			{	//argv[i] is a string
 				//in this program our arguments are a filename followed by the max of rooms, followed by max of treasure
 				switch(i)
@@ -54,8 +54,9 @@ bool production(int argc, char* argv[])
 		//now that we have our input,
 		//what is to be done:
 
-	    for(int i = 0; i<foundStringLength; i++)
+	    for(int i = 0; i < foundStringLength; i++)
 	    {
+
 	    	//find substrings starting here, of some feasible length
 	    	//is it a word?
 	    	//if it is, keep score
@@ -66,23 +67,25 @@ bool production(int argc, char* argv[])
 
 		return answer;
 }
-bool getYesNo(char* query)
-{
+
+bool getYesNo(char* query) {
    bool answer = true; //so far
    char said = 'x';
-   do
-   {
-	 printf("%s (y/n):",query);
-     fflush(stdout);
-     fflush(stdin);
-     scanf("%c",&said);
-   }while((said!= 'y')&&(said!='n'));
-   if(said=='n')
-   {
-	   answer=false;
+   while((said != 'y') && (said != 'n')) {
+       printf("%s (y/n):",query);
+       fflush(stdout);
+       scanf("%s",&said);
    }
-
-
+   if(said == 'n') {
+	   answer = false;
+   } else if(said == 'y') {
+       answer = true;
+   } 
+   // answer flips for some reason. buffer issue or could be the scanf im not sure
+   // extra check for y is put as a temporary fix although it does function correctly
+   if(answer == false) {
+       printf("answer is false\n");
+   }
    return answer;
 }
 
@@ -97,7 +100,7 @@ void substringExtraction(char* whole, int* results)
 	{
 		int howMany = theLength-size+1;
 		printf("There are %d substrings of length %d.\n", howMany, size);
-		for(int startS = 0; startS<theLength-size+1; startS++)
+		for(int startS = 0; startS < theLength-size+1; startS++)
 		{
 		    //The substrings should be extracted.
 			strncpy(target, whole+startS, size);
@@ -107,6 +110,7 @@ void substringExtraction(char* whole, int* results)
 			{
 				//the user said yes
 				//TODO: add to the results
+                results[size]++;
 			}
 			else
 			{

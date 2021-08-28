@@ -30,13 +30,14 @@ bool testLengthDetermination()
 
 	return answer;
 }
+
 bool testSubstringExtraction()
 {
 	bool answer = true; //so far
 
 	char* whole = "Gita";
 	int itsLength = strlen(whole)-1;
-	int resultsArray[itsLength];//remembers how many words of that length are found
+	int resultsArray[itsLength]; //remembers how many words of that length are found
 	for(int i = 0; i<itsLength; i++)
 	{
 		resultsArray[i]=0;
@@ -64,10 +65,9 @@ bool testSubstringExtraction()
 		answer = false;
 	}
 
-
-
 	return answer;
 }
+
 bool testPrintout()
 {
 	bool answer = true; //so far

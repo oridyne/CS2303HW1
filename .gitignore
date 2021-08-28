@@ -3,3 +3,5 @@ build
 Debug
 .project
 .cproject
+cmake-build-debug
+.idea
