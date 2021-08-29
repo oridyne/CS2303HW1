@@ -6,6 +6,7 @@
  */
 
 #include "production.h"
+#include <stdio.h>
 
 bool production(int argc, char* argv[])
 {
@@ -27,21 +28,17 @@ bool production(int argc, char* argv[])
 
 			for(int i = 1; i < argc; i++) //don't want to read argv[0]
 			{	//argv[i] is a string
-				//in this program our arguments are a filename followed by the max of rooms, followed by max of treasure
+				//in this program our arguments are a filename followed by the max of rooms, followed by max of treasur3
 				switch(i)
 				{
 				case 1:
-					foundStringLength = strlen(argv[i]);
-
-					//this is the string to be searched
-                    if (foundStringLength <= MAXSTRINGLENGTH)
-                    {
-                    	strcpy(string4Search, argv[i]);
-                    }
-
-					printf("Length of input string is %d\n",foundStringLength);fflush(stdout);
+					foundStringLength = lengthDetermination(argv[i]);
+					if(foundStringLength > 0) {
+						strcpy(string4Search,argv[i]);
+					} else {
+						return false;	
+					} 				
 					break;
-
 				default:
 					puts("Unexpected argument count."); fflush(stdout);
 					answer = false;
@@ -54,16 +51,16 @@ bool production(int argc, char* argv[])
 		//now that we have our input,
 		//what is to be done:
 
-	    for(int i = 0; i < foundStringLength; i++)
-	    {
+		int resultsArr[foundStringLength-1];
+		for(int i = 0; i < foundStringLength-1; i++) 
+		{
+			resultsArr[i] = 0;
+		}
 
-	    	//find substrings starting here, of some feasible length
-	    	//is it a word?
-	    	//if it is, keep score
-
-	    }
+		substringExtraction(string4Search, resultsArr);
 
 	    //print output
+		printout(foundStringLength, resultsArr);		
 
 		return answer;
 }
@@ -83,9 +80,9 @@ bool getYesNo(char* query) {
    } 
    // answer flips for some reason. buffer issue or could be the scanf im not sure
    // extra check for y is put as a temporary fix although it does function correctly
-   if(answer == false) {
-       printf("answer is false\n");
-   }
+   /* if(answer == false) { */
+   /*     printf("answer is false\n"); */
+   /* } */
    return answer;
 }
 
@@ -110,14 +107,37 @@ void substringExtraction(char* whole, int* results)
 			{
 				//the user said yes
 				//TODO: add to the results
-                results[size]++;
+                results[size-1]++;
 			}
-			else
-			{
-				//the user said no
-			}
-
 		}
+	}
+}
+
+int lengthDetermination(char* inputString)
+{
+	int	stringLength = strlen(inputString);
+
+	//this is the string to be searched
+	if (stringLength > MAXSTRINGLENGTH)
+	{
+		puts("Input string has length greater than max length");
+		fflush(stdout);
+		stringLength = -1;
+	} else if (stringLength <= 0) {
+		puts("Input string has length less than one");
+		fflush(stdout);
+		stringLength = -1;
+	} else {
+		printf("Length of input string is %d\n",stringLength);
+		fflush(stdout);
+	}
+	return stringLength;
+}
+
+void printout(int stringLength, int *results) {
+	puts("\nResults:");
+	for(int i = 0; i < stringLength-1; i++) {
+		printf("%d words of length %d\n", results[i], i+1);
 	}
 }
 

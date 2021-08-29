@@ -17,6 +17,7 @@
 bool production(int argc, char* argv[]);
 bool getYesNo(char* query);
 void substringExtraction(char* whole, int* results);
-
+int lengthDetermination(char* inputString);
+void printout(int stringLength, int* results); 
 
 #endif /* PRODUCTION_H_ */
